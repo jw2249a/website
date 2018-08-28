@@ -30,7 +30,7 @@ function mouseover(d) {
       return "translate(240, 240)scale(10)rotate("+d/60+")"
       })
     .transition()
-      .delay(1500)
+      .delay(1000)
       .attr("transform", translate)
       .on("mouseover", mouseover)
 
