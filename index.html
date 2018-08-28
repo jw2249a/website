@@ -38,7 +38,7 @@ var path = svg.append("g")
           .radius(function(a) {
 
               var t = d3.now() / 4000;
-              return 300+ Math.cos(a*13- i*6) * Math.pow((1-Math.sin(a-t-10)), 5);
+              return 200+Math.cos(a*13- i*6)*t/(6) * Math.pow((1-Math.sin(a+t-10)), 6);
             });
     });
     d3.timer(function() {
