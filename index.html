@@ -11,20 +11,23 @@
 
 </style>
 <body>
-<svg width="800" height="750"></svg>
+<svg width="800" height="750" style="stroke-width:0px"></svg>
 <script>
 var svg = d3.select("svg"),
     width = +svg.attr("width"),
     height = +svg.attr("height"),
     angles = d3.range(0, 2 * Math.PI, Math.PI/200);
 
+
+
 var path = svg.append("g")
     .attr("transform", "translate(" + width /2 + "," + height / 2 + ")")
     .attr("fill", "none")
-    .attr("stroke-width", 7)
+    .attr("stroke-width", 6)
+
 
   .selectAll("path")
-  .data(["navy", "maroon", "green","yellow", "magenta", "teal"])
+  .data(["navy", "maroon", "green","yellow", "magenta", "teal",  "red"])
   .enter().append("path")
     .attr("stroke", function(d) { return d; })
     .style("mix-blend-mode", "multiply")
@@ -34,8 +37,8 @@ var path = svg.append("g")
           .angle(function(a) { return a; })
           .radius(function(a) {
 
-              var t = d3.now() / 1000;
-              return 300+ Math.cos(a*10- i*6) * Math.pow((1+Math.sin(a+t)), 1)*15;
+              var t = d3.now() / 4000;
+              return 300+ Math.cos(a*13- i*6) * Math.pow((1-Math.sin(a-t-10)), 5);
             });
     });
     d3.timer(function() {
