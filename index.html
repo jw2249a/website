@@ -34,7 +34,7 @@ function mouseover(d, i) {
   d3.select(this)
     .transition()
     .duration(1500)
-  .attr("transform", function(d, i) { "translate(480,180)scale(8)rotate("+i/60+")") }
+  .attr("transform", function(d, i) { "translate(480,180)scale(8)rotate("+i/60+")" })
     .transition()
       .duration(1500)
       .attr("transform", translate)
