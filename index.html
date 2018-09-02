@@ -4,30 +4,14 @@
   <title>Jack Williams Is Batman</title>
     <script src="https://d3js.org/d3.v5.min.js"></script>
 </head>
-<style>
 
-body {
-  background: url(doge.jpg);
-  background-size: 280px 380px;
-  animation-duration: 20s;
-  animation-name: slide;
-  animation-timing-function: linear;
-  animation-iteration-count: infinite;
-}
-
-@keyframes slide {
-  from { background-position: 0 0; }
-  to { background-position: 1280px 1280px; }
-}
-
-</style>
 <body>
 
 
 <script>
 var w = window.innerWidth-window.innerWidth/60,
     h = window.innerHeight,
-    z = 20,
+    z = 18,
     x = w / z+100,
     y = h / z;
 
@@ -41,7 +25,7 @@ svg.selectAll("rect")
     .attr("transform", translate)
     .attr("width", z)
     .attr("height", z)
-    .style("fill", function(d) { return d3.hsl(d % x / x * 80, 1, Math.floor(d / x) / y); })
+    .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
     .on("mouseover", mouseover);
 
 function translate(d) {
@@ -57,7 +41,7 @@ function mouseover(d, i) {
     .transition()
       .duration(1500)
       .attr("transform", translate)
-      .attr("transform", "translate(-10,-1000)rotate(360)")
+
 }
   </script>
 </body>
