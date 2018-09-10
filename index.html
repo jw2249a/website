@@ -1,44 +1,82 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <head>
-  <title>Jack Williams Is Batman</title>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
-  </head>
+  <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+  <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+<style>
+
+</style>
+
 <body>
+  <select id="selectSet">
+  </select>
+  <div>
+  </div>
 <script>
-var w = window.innerWidth-window.innerWidth/60,
-    h = window.innerHeight-10,
-    z = 20,
-    x = w / z,
-    y = h / z;
 
-var svg = d3.select("body").append("svg")
-    .attr("width", w)
-    .attr("height", h);
+var x,
+  sets = []
+  select = document.getElementById("selectSet");
 
-svg.selectAll("rect")
-    .data(d3.range(x * y))
-  .enter().append("rect")
-    .attr("transform", translate)
-    .attr("width", z)
-    .attr("height", z)
-    .style("fill", function(d) { return d3.hsl(d % x / x * 360, 1, Math.floor(d / x) / y); })
-    .on("mouseover", mouseover);
+  d3.json("AllSets.json").then(function(data) {
+    sets = Object.keys(data);
+    for(var i = 0; i < sets.length; i++) {
+        var opt = data[sets[i]].name;
+        var el = document.createElement("option");
+        el.textContent = opt;
+        el.value = sets[i];
+        select.appendChild(el);
+    };
+    x = data;
+    return x  ;
+  });
 
-function translate(d) {
-  return "translate(" + (d % x) * z + "," + Math.floor(d / x) * z + ")";
-}
+var setInfo;
+  d3.select("#selectSet").on("change", function() {
 
-function mouseover(d, i) {
-  this.parentNode.appendChild(this);
-  d3.select(this)
-    .transition()
-    .duration(1500)
-  .attr("transform", function(d, i) { "translate(480,180)scale(8)rotate("+i/60+")" })
-    .transition()
-      .duration(1500)
-      .attr("transform", translate)
+    d3.selectAll("#name-list").remove()
 
-}
-  </script>
+    var setInfo = d3.select("div").append("select")
+      .attr("id", "name-list");
+    setInfo.selectAll("option").remove();
+    var options = setInfo.selectAll("option")
+      .data(Object.keys(x[select.value]))
+      .enter()
+      .append("option")
+
+    options.text(function(d) {
+      return d;
+    })
+      .attr("value", function(d) {
+        return d;
+      });
+
+      d3.select("#name-list").on("change", function() {
+        d3.selectAll("p").remove();
+        d3.selectAll("hr").remove();
+        if (document.getElementById("name-list").value == "cards") {
+          for (var i = 0; i < x[select.value].cards.length; i++) {
+            d3.selectAll("div").append("p").text("card: "+ x[select.value].cards[i].name)
+            d3.selectAll("div").append("p").text("cmc: " + x[select.value].cards[i].cmc)
+            d3.selectAll("div").append("p").text("color: " + x[select.value].cards[i].colorIdentity)
+            d3.selectAll("div").append("p").text("power: " + x[select.value].cards[i].power)
+            d3.selectAll("div").append("p").text("toughness: " + x[select.value].cards[i].toughness)
+            d3.selectAll("div").append("p").text("rarity: " + x[select.value].cards[i].rarity)
+            d3.selectAll("div").append("p").text("type: " + x[select.value].cards[i].type)
+            d3.selectAll("div").append("p").text("types: " + x[select.value].cards[i].types)
+            d3.selectAll("div").append("p").text("sub-type: " + x[select.value].cards[i].subtypes)
+            d3.selectAll("div").append("p").text("text: " + x[select.value].cards[i].text)
+            d3.selectAll("div").append("p").text("artist: " + x[select.value].cards[i].artist)
+            d3.selectAll("div").append("p").text("flavor: " + x[select.value].cards[i].flavor)
+            d3.selectAll("div").append("hr")
+          }
+        } else {
+          d3.selectAll("div").append("p").text(x[select.value][document.getElementById("name-list").value])
+      }
+      })
+  })
+
+
+</script>
 </body>
